@@ -1,60 +1,58 @@
 import { StyleSheet } from "react-native";
 
 const signupStyles = StyleSheet.create({
-    containerSignUp: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-      },
-   
-    inputView1: {
-        borderBottomColor: "#003f5c",
-        borderBottomWidth: 1,
-        width: 300,
-        height: 45,
-        marginBottom: 20,
-        alignItems: "center",
-    },
-   
-    TextInput1: {
-        height: 50,
-        flex: 1,
-        padding: 10,
-        width: 300,    
+  containerSignUp: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-    },
-   
-   
-    signupBtn1: {
-        width: 140,
-        borderRadius: 25,
-        height: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#FF1493",
-        marginTop: 30,
+  inputView1: {
+    borderBottomColor: "#003f5c",
+    borderBottomWidth: 1,
+    width: 300,
+    height: 45,
+    marginBottom: 20,
+    alignItems: "center",
+  },
 
-    },
-  
-    signupText1: {
-        alignItems: "center",
-        justifyContent: "center",
-        color: 'white',
-    },
-    
-    loginBtn1: {
+  TextInput1: {
+    height: 50,
+    flex: 1,
+    padding: 10,
+    width: 300,
+  },
 
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 20,
+  signupBtn1: {
+    width: 140,
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FF1493",
+    marginTop: 30,
+  },
 
-        height: 30,
-    },
-  
-    loginText1: {
-        color: 'white',
-    },
-  });
+  signupText1: {
+    alignItems: "center",
+    justifyContent: "center",
+    color: "white",
+  },
 
-  export default signupStyles
+  loginBtn1: {
+    width: "330px",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FF1493",
+    marginTop: 30,
+  },
+
+  loginText1: {
+    color: "white",
+  },
+});
+
+export default signupStyles;

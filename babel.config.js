@@ -11,6 +11,7 @@ module.exports = function(api) {
                alias: {
                  "tests": ["./tests/"],
                  "@components": "./src/components",
+                 "@native-base/icons": "@native-base/icons/lib",
                }
              }
            ]
