@@ -1,22 +1,37 @@
-import * as SecureStore from "expo-secure-store";
-import { TOKEN } from "./constants";
+import { useAsyncStorage } from "@react-native-community/async-storage";
 
-const storage = {
-  setItem: (key: string, value: string) => {
-    return SecureStore.setItemAsync(key, value);
-  },
-  getItem: (key: string) => {
-    return SecureStore.getItemAsync(key);
-  },
-  removeItem: (key: string) => {
-    return SecureStore.deleteItemAsync(key);
-  },
-  removeMulItem: (array: Array<string>) => {
-    return Promise.all(array.map((item) => SecureStore.deleteItemAsync(item)));
-  },
-  destroy: () => {
-    return Promise.all([TOKEN].map((item) => SecureStore.deleteItemAsync(item)));
-  },
-};
+export async function setItem(key: string, value: string) {
+  try {
+    return await useAsyncStorage(key).setItem(value, (err) => {
+      if (err) {
+        console.log("setItem fail");
+      } else {
+        console.log("setItem success");
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-export default storage;
+export async function getItem(key: string) {
+  try {
+    return await useAsyncStorage(key).getItem();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function removeItem(key: string) {
+  try {
+    return await useAsyncStorage(key).removeItem((err) => {
+      if (err) {
+        console.log("removeItem fail");
+      } else {
+        console.log("removeItem success");
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}

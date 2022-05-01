@@ -11,11 +11,7 @@ const AuthenService = {
     });
   },
   register: async (data: DataSignUp) => {
-    return await HttpRequest.post("/user/register", {
-      ...data,
-      phone: data.phone,
-      password: data.password,
-    });
+    return await HttpRequest.post("/user/register", data);
   },
   getMyinfo: async () => {
     return await HttpRequest.get("/user/myinfo");

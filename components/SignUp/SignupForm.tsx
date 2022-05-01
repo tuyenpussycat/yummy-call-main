@@ -4,11 +4,29 @@ import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import loginStyles from "./SignupStyles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import signupStyles from "./SignupStyles";
-import { Box, FormControl, Input, Stack, WarningOutlineIcon } from "native-base";
+import {
+  Box,
+  Button,
+  FormControl,
+  Input,
+  Stack,
+  useTheme,
+  useToast,
+  WarningOutlineIcon,
+} from "native-base";
 import { DataSignUp } from "../../types";
 import { validatePassword, validatePhone } from "../../untils/helper";
 import AuthenService from "../../services/Authen.service";
+import { setItem } from "../../untils/storage";
+import { REFRESH_TOKEN, TOKEN } from "../../constants/storage";
+import { setToken } from "../../store/actions";
+import { useDispatch } from "react-redux";
+import Toast from "../Toast";
+import colors from "native-base/lib/typescript/theme/base/colors";
 const SignUpForm: React.FC = ({ navigation }: any) => {
+  const toast = useToast();
+  const { colors } = useTheme();
+  const [loading, setLoading] = useState<boolean>(false);
   const [enableSubmit, setEnableSubmit] = useState<boolean>(false);
   const [dataRegister, setDataRegister] = useState<DataSignUp>({
     phone: "",
@@ -21,7 +39,9 @@ const SignUpForm: React.FC = ({ navigation }: any) => {
     confirmpassword: false,
   });
 
-  const handleRegister = () => {
+  const dispatch = useDispatch();
+
+  const handleRegister = async () => {
     if (
       !validatePhone.test(dataRegister.phone) &&
       !validatePassword(dataRegister.password) &&
@@ -46,7 +66,20 @@ const SignUpForm: React.FC = ({ navigation }: any) => {
       return;
     }
 
-    AuthenService.register(dataRegister);
+    try {
+      setLoading(true);
+      const res = await AuthenService.register(dataRegister);
+      await setItem(TOKEN, res.data.accessToken);
+      await setItem(REFRESH_TOKEN, res.data.refreshAccessToken);
+      dispatch(setToken(res.data.accessToken));
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      toast.show({
+        render: () => <Toast text="Register fail" color={colors.main} />,
+        placement: "top",
+      });
+    }
   };
 
   const onChangeInput = (key: string, value: string) => {
@@ -127,20 +160,23 @@ const SignUpForm: React.FC = ({ navigation }: any) => {
                 onChangeText={(value) => onChangeInput("confirmpassword", value)}
               />
               <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                confrim password not match
+                confirm password not match
               </FormControl.ErrorMessage>
             </Stack>
           </FormControl>
         </Box>
       </Box>
-
-      <TouchableOpacity
-        style={signupStyles.signupBtn1}
+      <Button
+        size="md"
+        marginTop={10}
+        backgroundColor={colors.main}
+        width={300}
+        borderRadius={30}
+        isLoading={loading}
         disabled={!enableSubmit}
         onPress={handleRegister}>
-        <Text style={signupStyles.signupText1}>Đăng Ký Tài Khoản</Text>
-      </TouchableOpacity>
-
+        Register
+      </Button>
       <TouchableOpacity style={signupStyles.loginBtn1} onPress={() => navigation.navigate("Login")}>
         <Text style={signupStyles.signupText1}>Đã có tài khoản? Đăng nhập ngay!</Text>
       </TouchableOpacity>

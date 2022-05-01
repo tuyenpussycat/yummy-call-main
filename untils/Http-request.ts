@@ -1,31 +1,23 @@
 import axios from "axios";
-import { TOKEN } from "./constants";
-import storage from "./storage";
+import { REFRESH_TOKEN } from "../constants/storage";
+import { TOKEN } from "../constants/storage";
+import { setItem, getItem, removeItem } from "./storage";
 const baseURL = "https://yummy-app-live-server.herokuapp.com/api";
-// import { disconnectSocket } from "./socket-io";
 // const baseURL = "http://10.0.19.66:8080/api";
-const refreshToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjI2YmNmMGQ3MTgxYWM5Nzc4YzcyNzIzIiwiaWF0IjoxNjUxMjQyNjYxLCJleHAiOjE2ODI4MDAyNjF9.EjODiUGndxrq9PhzdClHcsObY4SDmKXuJFhzni9cQeY";
-let token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNjI2YmNmMGQ3MTgxYWM5Nzc4YzcyNzIzIiwiaWF0IjoxNjUxMjUxOTY0LCJleHAiOjE2NTEyNTU1NjR9.iaNUEtMngBcrPH8l_1-6t52kKJyVYMPaph1sAeVGb3g";
 
 const http = axios.create({
   method: "post", // default
   baseURL,
-  // timeout: 3000,
   headers: {
     "Content-Type": "application/json; charset=utf-8",
   },
 });
 
 http.interceptors.request.use(
-  (config) => {
+  async (config) => {
     const newConfig = config;
-
-    // (async () => {
-    //   token = (await storage.getItem(TOKEN)) || "";
-    // })();
-
+    const token = (await getItem(TOKEN)) || "";
+    const refreshToken = (await getItem(REFRESH_TOKEN)) || "";
     if (token && token !== undefined && token !== null) {
       if (newConfig !== undefined && newConfig.headers) {
         newConfig.headers.Authorization = `Bearer ${token}`;
@@ -40,7 +32,9 @@ http.interceptors.request.use(
 
     return newConfig;
   },
-  (error) => Promise.reject(error),
+  (error) => {
+    return Promise.reject(error);
+  },
 );
 
 http.interceptors.response.use(
@@ -52,11 +46,25 @@ http.interceptors.response.use(
     if (errors?.response?.status === 401) {
       const originalRequest = errors.config;
       if (data.status !== 401) {
+        await removeItem(TOKEN);
+        await removeItem(REFRESH_TOKEN);
         return Promise.reject(errors);
       }
-      const res: any = await http.post("/user/refresh_token");
+      const refreshToken = (await getItem(REFRESH_TOKEN)) || "";
+      if (!refreshToken) {
+        await removeItem(TOKEN);
+        await removeItem(REFRESH_TOKEN);
+        return Promise.reject(errors);
+      }
+
+      const res: any = await http.post("/user/refresh_token", {
+        headers: {
+          refresh_token: `Bearer ${refreshToken}`,
+        },
+      });
       originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
-      token = res.data.accessToken;
+      await setItem(TOKEN, res.data.accessToken);
+      await setItem(REFRESH_TOKEN, res.data.refreshAccessToken);
 
       return http(originalRequest);
     }
