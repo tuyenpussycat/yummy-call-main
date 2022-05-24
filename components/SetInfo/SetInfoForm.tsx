@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Text, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { Text } from "react-native";
 import setInfoStyles from "./SetInfoStyles";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -9,17 +9,11 @@ import {
   Box,
   Button,
   FormControl,
-  Icon,
   Input,
-  Link,
   Stack,
   useTheme,
-  useToast,
-  WarningOutlineIcon,
   Radio,
 } from "native-base";
-import Toast from "../Toast";
-import EditScreenInfo from "../EditScreenInfo";
 
 const LoginForm: React.FC = ({ navigation }: any) => {
   const { colors } = useTheme();

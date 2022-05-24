@@ -1,4 +1,4 @@
-import { useAsyncStorage } from "@react-native-community/async-storage";
+import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 
 export async function setItem(key: string, value: string) {
   try {

@@ -2,7 +2,7 @@ import axios from "axios";
 import { REFRESH_TOKEN } from "../constants/storage";
 import { TOKEN } from "../constants/storage";
 import { setItem, getItem, removeItem } from "./storage";
-const baseURL = "https://yummy-app-live-server.herokuapp.com/api";
+const baseURL = "https://yummy-call-server-v2.herokuapp.com/";
 // const baseURL = "http://10.0.19.66:8080/api";
 
 const http = axios.create({

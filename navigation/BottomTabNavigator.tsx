@@ -3,12 +3,15 @@ import useColorScheme from "../hooks/useColorScheme";
 import { RootTabParamList, RootTabScreenProps } from "../types";
 import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import Home from "../screens/home/Home";
+import Search from "../screens/srearch/Search";
 import { Pressable } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { useTheme } from "native-base";
+import ProfileScreen from "../screens/profile/ProfileScreen";
+import Favorite from "../screens/favorite/Favorite";
+import Stream from "../screens/stream/Stream";
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function TabBarIcon(props: {
@@ -29,9 +32,9 @@ export default function BottomTabNavigator() {
       }}>
       <BottomTab.Screen
         name="Home"
-        component={TabOneScreen}
+        component={Home}
         options={({ navigation }: RootTabScreenProps<"Home">) => ({
-          title: "Home",
+          // title: "Home",
           tabBarIcon: ({ color, focused }) => {
             return <Entypo name="home" size={22} color={color} />;
           },
@@ -39,9 +42,9 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Search"
-        component={TabTwoScreen}
+        component={Search}
         options={({ navigation }: RootTabScreenProps<"Search">) => ({
-          title: "Search",
+          // title: "Search",
           tabBarIcon: ({ color }) => {
             return <EvilIcons name="search" size={28} color={color} />;
           },
@@ -49,9 +52,9 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Stream"
-        component={TabTwoScreen}
+        component={Stream}
         options={({ navigation }: RootTabScreenProps<"Stream">) => ({
-          title: "Stream",
+          // title: "Stream",
           tabBarIcon: ({ color }) => {
             return <Entypo name="video-camera" size={20} color={color} />;
           },
@@ -60,9 +63,9 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Favorite"
-        component={TabTwoScreen}
+        component={Favorite}
         options={({ navigation }: RootTabScreenProps<"Favorite">) => ({
-          title: "Favorite",
+          // title: "Favorite",
           tabBarIcon: ({ color, focused }) => {
             if (focused) return <Entypo name="heart" size={24} color={color} />;
             return <EvilIcons name="heart" size={28} color={color} />;
@@ -71,10 +74,10 @@ export default function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="Me"
-        component={TabTwoScreen}
-        options={({ navigation }: RootTabScreenProps<"Me">) => ({
-          title: "Info",
+        name="Profile"
+        component={ProfileScreen}
+        options={({ navigation }: RootTabScreenProps<"Profile">) => ({
+          // title: "Info",
           tabBarIcon: ({ color }) => {
             return <EvilIcons name="user" size={28} color={color} />;
           },

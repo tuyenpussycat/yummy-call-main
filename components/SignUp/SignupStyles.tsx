@@ -41,7 +41,7 @@ const signupStyles = StyleSheet.create({
   },
 
   loginBtn1: {
-    width: "330px",
+    width: 330,
     borderRadius: 25,
     height: 50,
     alignItems: "center",

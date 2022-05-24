@@ -49,7 +49,7 @@ const loginStyles = StyleSheet.create({
   },
 
   signupBtn: {
-    width: "330px",
+    width: 330,
     borderRadius: 25,
     height: 50,
     alignItems: "center",

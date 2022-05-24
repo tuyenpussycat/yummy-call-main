@@ -37,7 +37,7 @@ export type RootTabParamList = {
   Search: undefined;
   Stream: undefined;
   Home: undefined;
-  Me: undefined;
+  Profile: undefined;
   Favorite: undefined;
 };
 

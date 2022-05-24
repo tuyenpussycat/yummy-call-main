@@ -1,4 +1,5 @@
 // import moment from 'moment/moment';
+import { Info } from "../screens/profile/Infor.types";
 import { DataSignIn, DataSignUp } from "../types";
 import HttpRequest from "../untils/Http-request";
 
