@@ -13,8 +13,9 @@ export default function Stream({ navigation }: RootTabScreenProps<"Stream">) {
     <View style={styles.container} darkColor="white">
       <Box width={"30%"}>
         <ImageBackground source={image1} resizeMode="cover" style={{ height: 800 }}>
-          <Box style={{ marginTop: "520px" }} paddingLeft={"3"}>
+          <Box style={{ marginTop: "514px" }}>
             <ScrollView
+              paddingLeft={"3"}
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
               width={"80%"}
@@ -79,7 +80,7 @@ export default function Stream({ navigation }: RootTabScreenProps<"Stream">) {
               </Box>
             </ScrollView>
             {checkText === true ? (
-              <Input placeholder="Viết bình luận"></Input>
+              <Input width={"90%"} borderColor={"white"} placeholder="Viết bình luận"></Input>
             ) : (
               <TouchableOpacity onPress={() => setCheckText(!checkText)}>
                 <img width={24} src="https://cdn-icons-png.flaticon.com/512/724/724715.png"></img>
